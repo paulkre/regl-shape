@@ -7,7 +7,7 @@
     "build": "rimraf lib/ && tsc",
     "postbuild": "copyfiles -u 1 src/**/*.{vert,frag} lib",
     "start": "npm run build && canvas-pack",
-    "release": "npm run build && release-it --dry-run"
+    "release": "npm run build && release-it"
   },
   "repository": {
     "type": "git",
