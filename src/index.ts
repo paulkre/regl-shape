@@ -14,7 +14,7 @@ export enum JoinType {
   Rect = "rect",
 }
 
-export type LineProps = {
+export type ShapeProps = {
   dashes: number[] | null;
   join: JoinType;
   miterLimit: number;
@@ -30,7 +30,7 @@ export type LineProps = {
   // fill: any;
 };
 
-export interface InnerLineProps extends LineProps {
+export interface InnerShapeProps extends ShapeProps {
   scale: number[];
   scaleFract: number[];
 
@@ -46,7 +46,7 @@ export interface InnerLineProps extends LineProps {
   positionFractBuffer: Buffer;
 }
 
-function createDefaultProps(regl: Regl): LineProps {
+function createDefaultProps(regl: Regl): ShapeProps {
   return {
     dashes: null,
     join: JoinType.Miter,
@@ -70,15 +70,18 @@ function createDefaultProps(regl: Regl): LineProps {
 }
 
 // const maxLines = 2048;
-const maxPoints = 10000;
+// const maxPoints = 10000;
 
-export function createLineBuilder(regl: Regl) {
+export default function (regl: Regl) {
   const shaders = createShaders(regl);
   const defaultProps = createDefaultProps(regl);
 
   return {
-    createLine(points: Float64Array, partialInitialProps?: Partial<LineProps>) {
-      const initialProps: LineProps = {
+    createShape(
+      points: Float64Array,
+      partialInitialProps?: Partial<ShapeProps>
+    ) {
+      const initialProps: ShapeProps = {
         ...defaultProps,
         ...partialInitialProps,
       };
@@ -118,8 +121,8 @@ export function createLineBuilder(regl: Regl) {
         min: "linear",
       });
 
-      return (partialProps?: Partial<LineProps>) => {
-        const props: LineProps = { ...initialProps, ...partialProps };
+      return (partialProps?: Partial<ShapeProps>) => {
+        const props: ShapeProps = { ...initialProps, ...partialProps };
 
         let { count, color, close, join, range, dashes } = props;
 

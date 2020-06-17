@@ -6,8 +6,7 @@
   "scripts": {
     "build": "rimraf lib/ && tsc",
     "postbuild": "copyfiles -u 1 src/**/*.{vert,frag} lib",
-    "dev": "ts-node-dev --respawn src/index.ts",
-    "start": "node lib/index.js",
+    "start": "npm run build && canvas-pack",
     "release": "npm run build && release-it --dry-run"
   },
   "repository": {
@@ -30,6 +29,7 @@
   },
   "homepage": "https://github.com/paulkre/regl-shape#readme",
   "devDependencies": {
+    "canvas-pack": "^1.1.0",
     "copyfiles": "^2.3.0",
     "regl": "^1.6.1",
     "release-it": "^13.6.3",

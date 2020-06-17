@@ -1,12 +1,5 @@
-# regl-shape
-
-2D shape renderer for regl.
-
-## Usage
-
-```javascript
 import createRegl from "regl";
-import createShapeBuilder from "regl-shape";
+import createShapeBuilder from "./lib";
 
 export const canvas = document.getElementById("canvas");
 
@@ -37,4 +30,3 @@ regl.frame(({ tick }) => {
 
   shape();
 });
-```

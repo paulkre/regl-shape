@@ -7,13 +7,13 @@ import {
   DefaultContext,
 } from "regl";
 
-import { InnerLineProps, JoinType } from "..";
+import { InnerShapeProps, JoinType } from "..";
 
 import { createRectShader } from "./rect-shader";
 import { createMiterShader } from "./miter-shader";
 
 export type BufferAttribute = {
-  buffer: Buffer | DynamicVariableFn<Buffer, DefaultContext, InnerLineProps>;
+  buffer: Buffer | DynamicVariableFn<Buffer, DefaultContext, InnerShapeProps>;
   offset: number;
   stride: number;
   divisor: number;
@@ -42,7 +42,7 @@ type ShaderUniforms = {
 export type ShaderDrawConfig<Attributes> = DrawConfig<
   ShaderUniforms,
   Attributes,
-  InnerLineProps
+  InnerShapeProps
 >;
 
 function createBaseOptions(regl: Regl): ShaderDrawConfig<undefined> {
