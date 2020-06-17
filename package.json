@@ -1,0 +1,44 @@
+{
+  "name": "regl-shape",
+  "version": "0.1.0",
+  "description": "2D shape renderer for regl",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "rimraf lib/ && tsc",
+    "postbuild": "copyfiles -u 1 src/**/*.{vert,frag} lib",
+    "dev": "ts-node-dev --respawn src/index.ts",
+    "start": "node lib/index.js",
+    "release": "npm run build && release-it --dry-run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paulkre/regl-shape.git"
+  },
+  "keywords": [
+    "regl",
+    "shape",
+    "line",
+    "stroke",
+    "fill",
+    "2d",
+    "webgl"
+  ],
+  "author": "Paul Kretschel <paul.kretschel@icloud.com> (https://github.com/paulkre)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/paulkre/regl-shape/issues"
+  },
+  "homepage": "https://github.com/paulkre/regl-shape#readme",
+  "devDependencies": {
+    "copyfiles": "^2.3.0",
+    "regl": "^1.6.1",
+    "release-it": "^13.6.3",
+    "rimraf": "^3.0.2",
+    "typescript": "^3.9.5"
+  },
+  "dependencies": {
+    "array-bounds": "^1.0.1",
+    "array-normalize": "^1.1.4",
+    "color-normalize": "^1.5.0"
+  }
+}
