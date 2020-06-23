@@ -1,14 +1,17 @@
 import { Buffer } from "regl";
 import rgba, { InputColor } from "color-normalize";
 
+function isSingleColor(input: InputColor | InputColor[]): input is InputColor {
+  return !Array.isArray(input) || !Array.isArray(input[0]);
+}
+
 export function updateColorBuffer(
   colorBuffer: Buffer,
   colorData: Uint8Array,
   colors: InputColor | InputColor[],
   count: number
 ) {
-  // convert colors to typed arrays
-  if (!Array.isArray(colors)) {
+  if (isSingleColor(colors)) {
     let c = rgba(colors, "uint8");
 
     for (let i = 0; i < count + 1; i++) {
