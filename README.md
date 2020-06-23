@@ -20,6 +20,9 @@ const points = new Float64Array(2 * res).fill(0);
 const shape = createShape(points, {
   count: res,
   join: "round",
+  color: Array(res)
+    .fill()
+    .map(() => [Math.random(), Math.random(), Math.random()]),
 });
 
 regl.frame(({ tick }) => {
