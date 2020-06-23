@@ -4,9 +4,9 @@
   "description": "2D shape renderer for regl",
   "main": "lib/index.js",
   "scripts": {
+    "dev": "webpack-dev-server --config dev/webpack.config.js",
     "build": "rimraf lib/ && tsc",
     "postbuild": "copyfiles -u 1 src/**/*.{vert,frag} lib",
-    "start": "npm run build && canvas-pack",
     "release": "npm run build && release-it"
   },
   "repository": {
@@ -29,12 +29,21 @@
   },
   "homepage": "https://github.com/paulkre/regl-shape#readme",
   "devDependencies": {
-    "canvas-pack": "^1.1.0",
+    "@babel/core": "^7.10.3",
+    "@babel/preset-env": "^7.10.3",
+    "babel-loader": "^8.1.0",
     "copyfiles": "^2.3.0",
+    "glslify-loader": "^2.0.0",
+    "html-webpack-plugin": "^4.3.0",
+    "raw-loader": "^4.0.1",
     "regl": "^1.6.1",
     "release-it": "^13.6.3",
     "rimraf": "^3.0.2",
-    "typescript": "^3.9.5"
+    "ts-loader": "^7.0.5",
+    "typescript": "^3.9.5",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
     "array-bounds": "^1.0.1",

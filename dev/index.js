@@ -1,10 +1,7 @@
 import createRegl from "regl";
-import createShapeBuilder from "./lib";
-
-export const canvas = document.getElementById("canvas");
+import createShapeBuilder from "../src";
 
 export const regl = createRegl({
-  canvas,
   extensions: ["ANGLE_instanced_arrays"],
 });
 
