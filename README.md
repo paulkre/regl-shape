@@ -4,6 +4,8 @@
 
 ## Usage
 
+![Example Screenshot](https://github.com/paulkre/regl-shape/blob/master/dev/screenshot.png?raw=true)
+
 ```javascript
 import createRegl from "regl";
 import createShapeBuilder from "regl-shape";
