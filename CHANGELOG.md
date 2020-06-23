@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - CHANGELOG added
 - The color of the shape's stroke can now be specified with either one color or an array of colors
+- Screenshot of example code added to README
 
 ## [1.0.0] - 2020-06-17
 
