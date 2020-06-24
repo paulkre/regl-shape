@@ -34,7 +34,7 @@ If the number of the shape's points is supposed to change after creation you can
 
 ### Properties
 
-The shape's properties can be provided when the shape is being created or on the draw command.
+The shape's properties can either be passed on creation or when the shape is being drawn.
 
 | Property | Description | Default |
 | --- | ------ | --- |
