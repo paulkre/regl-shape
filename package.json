@@ -1,7 +1,7 @@
 {
   "name": "regl-shape",
   "version": "1.0.1",
-  "description": "2D shape renderer for regl",
+  "description": "2D shape shader for regl",
   "main": "lib/index.js",
   "scripts": {
     "dev": "webpack-dev-server --config dev/webpack.config.js",
@@ -16,6 +16,7 @@
   "keywords": [
     "regl",
     "shape",
+    "shader",
     "line",
     "stroke",
     "fill",
