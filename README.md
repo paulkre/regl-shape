@@ -16,15 +16,21 @@ const regl = createRegl();
 const { createShape } = createShapeBuilder(regl);
 
 const points = new Float64Array(64);
-const shape = createShape(points);
+const shape = createShape(points, {
+  // ...props
+});
 
 regl.frame(() => {
   for (let i = 0; i < points.length; i++) {
     // Mutate the point positions here.
   }
-  shape();
+  shape({
+    // ...props
+  });
 })
 ```
+
+If the number of the shape's points is supposed to change after creation you can do this by setting the `count` prop inside the draw call. Keep in mind that you can only provide values which are lower than the halved length of the initially created point array.
 
 ## Example
 
