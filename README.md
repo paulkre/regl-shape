@@ -48,8 +48,8 @@ The shape's properties can either be passed on creation or when the shape is bei
 | `miterLimit` | Max ratio of the join length to the thickness. | `1` |
 | `close` | Connect last point with the first point with a stroke. | `false` |
 | `overlay` | Enable overlay of line segments. | `false` |
-| `range` | Visible data range. | `null` |
-| `viewport` | Area within canvas with the following shape: `{x, y, width, height}`. | `null` |
+| `range` | Visible data range (`[minX, minY, maxX, maxY]`). | `null` |
+| `viewport` | Area within canvas (`{ x, y, width, height }`). | `null` |
 | `depth` | Value for the z-axis of the shapes position. | `0` |
 
 
