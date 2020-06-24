@@ -27,7 +27,6 @@ export function createFillShader(
     stencil,
     viewport,
 
-    // @ts-ignore
     primitive: "triangles",
     elements: (_, p) => p.triangles,
     offset: 0,
@@ -55,8 +54,6 @@ export function createFillShader(
 
     depth: { enable: false },
   };
-
-  console.log(drawConfig);
 
   return regl(drawConfig);
 }

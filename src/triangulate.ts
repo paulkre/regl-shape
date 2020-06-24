@@ -1,7 +1,5 @@
 import earcut from "earcut";
 
-let printed = false;
-
 export function triangulate(points: Float64Array): number[] {
   // const pos = [];
 
@@ -24,11 +22,6 @@ export function triangulate(points: Float64Array): number[] {
   // }
 
   let triangles = earcut(points);
-
-  if (!printed) {
-    printed = true;
-    console.log(triangles);
-  }
 
   // for (let i = 0, l = triangles.length; i < l; i++) {
   //   if (ids[triangles[i]] != null) triangles[i] = ids[triangles[i]];
