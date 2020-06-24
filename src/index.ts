@@ -75,46 +75,17 @@ export interface InnerShapeProps extends ShapeProps {
   fillColor: Uint8Array | null;
 }
 
-function createDefaultProps(regl: Regl): ShapeProps {
-  return {
-    count: 0,
-    color: "white",
-    fill: null,
-    thickness: 1,
-    dashes: null,
-    join: JoinStyle.Bevel,
-    miterLimit: 1,
-    close: false,
-    opacity: 1,
-    overlay: false,
-    range: [-1, -1, 1, 1],
-    viewport: {
-      x: 0,
-      y: 0,
-      width: regl._gl.drawingBufferWidth,
-      height: regl._gl.drawingBufferHeight,
-    },
-    depth: 0,
-  };
-}
-
-// const maxLines = 2048;
-// const maxPoints = 10000;
-
 export default function (regl: Regl) {
   const shaders = createShaders(regl);
-  const defaultProps = createDefaultProps(regl);
+  let shapeCount = 0;
 
   return {
     createShape(
       points: Float64Array,
-      partialInitialProps?: Partial<ShapeProps>
+      initialPartialProps?: Partial<ShapeProps>
     ) {
-      const initialProps: ShapeProps = {
-        ...defaultProps,
-        count: Math.floor(points.length / 2),
-        ...partialInitialProps,
-      };
+      const id = shapeCount;
+      shapeCount++;
 
       const normPoints = new Float64Array(points.length);
       const pointsData = new Float64Array(points.length + 6);
@@ -152,7 +123,29 @@ export default function (regl: Regl) {
       });
 
       return (partialProps?: Partial<ShapeProps>) => {
-        const props: ShapeProps = { ...initialProps, ...partialProps };
+        const props: ShapeProps = {
+          count: Math.floor(points.length / 2),
+          color: "white",
+          fill: null,
+          thickness: 1,
+          dashes: null,
+          join: JoinStyle.Bevel,
+          miterLimit: 1,
+          close: false,
+          opacity: 1,
+          overlay: false,
+          range: [-1, -1, 1, 1],
+          viewport: {
+            x: 0,
+            y: 0,
+            width: regl._gl.drawingBufferWidth,
+            height: regl._gl.drawingBufferHeight,
+          },
+          depth: -0.01 * id,
+
+          ...initialPartialProps,
+          ...partialProps,
+        };
 
         let { count, color, close, join, range, dashes, fill } = props;
 
