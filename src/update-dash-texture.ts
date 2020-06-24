@@ -1,6 +1,7 @@
 import { Texture2D } from "regl";
 
 const dashMult = 2;
+const defaultDashData = new Uint8Array(8).fill(255);
 
 export function updateDashTextureAndGetLength(
   texture: Texture2D,
@@ -11,7 +12,7 @@ export function updateDashTextureAndGetLength(
 
   if (dashes.length < 2) {
     dashLength = 1;
-    dashData = new Uint8Array([255, 255, 255, 255, 255, 255, 255, 255]);
+    dashData = defaultDashData;
   } else {
     dashLength = 0;
     for (let i = 0; i < dashes.length; ++i) {
@@ -32,18 +33,14 @@ export function updateDashTextureAndGetLength(
     }
   }
 
-  texture.subimage(
-    {
-      channels: 1,
-      data: dashData,
-      width: dashData.length,
-      height: 1,
-      mag: "linear",
-      min: "linear",
-    },
-    0,
-    0
-  );
+  texture({
+    channels: 1,
+    data: dashData,
+    width: dashData.length,
+    height: 1,
+    mag: "linear",
+    min: "linear",
+  });
 
   return dashLength;
 }
