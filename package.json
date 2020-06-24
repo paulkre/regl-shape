@@ -36,6 +36,7 @@
     "babel-loader": "^8.1.0",
     "copyfiles": "^2.3.0",
     "glslify-loader": "^2.0.0",
+    "hsl-rgb": "^1.0.0",
     "html-webpack-plugin": "^4.3.0",
     "raw-loader": "^4.0.1",
     "regl": "^1.6.1",
