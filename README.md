@@ -27,14 +27,30 @@ regl.frame(() => {
   shape({
     // ...props
   });
-})
+});
 ```
 
 If the number of the shape's points is supposed to change after creation you can do this by setting the `count` prop inside the draw call. Keep in mind that you can only provide values which are lower than the halved length of the initially created point array.
 
 ### Properties
 
-- 
+The shape's properties can be provided when the shape is being created or on the draw command.
+
+| Property | Description | Default |
+| --- | ------ | --- |
+| `count` | Number of points to in the shape. | `0` |
+| `color` | Stroke color of the shape. Can either be a single color or an array of colors containing a color for every point in the shape. The format of a single color is either a CSS color string or an array with `0..1` values, eg. `"red"` or `[0, 0, 0, 1]`. | `"white"` |
+| `opacity` | Transparency of the shape's stroke (`0..1`). | `1` |
+| `thickness` | Thickness of the shape's stroke in px (`>0`). | `1` |
+| `dashes` | Array with dash lengths in px, altering color/space pairs, ie. `[2,10, 5,10, ...]`. `null` corresponds to solid line. | `null` |
+| `join` | Join style: `"rect"`, `"round"`, `"bevel"`. Applied to caps too. | `"bevel"` |
+| `miterLimit` | Max ratio of the join length to the thickness. | `1` |
+| `close` | Connect last point with the first point with a stroke. | `false` |
+| `overlay` | Enable overlay of line segments. | `false` |
+| `range` | Visible data range. | `null` |
+| `viewport` | Area within canvas with the following shape: `{x, y, width, height}`. | `null` |
+| `depth` | Value for the z-axis of the shapes position. | `0` |
+
 
 ## Example
 
@@ -55,6 +71,7 @@ const points = new Float64Array(2 * res).fill(0);
 
 const shape = createShape(points, {
   join: "round",
+  thickness: 12,
   color: Array(res)
     .fill()
     .map(() => [Math.random(), Math.random(), Math.random()]),

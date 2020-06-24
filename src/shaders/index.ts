@@ -7,7 +7,7 @@ import {
   DefaultContext,
 } from "regl";
 
-import { InnerShapeProps, JoinType } from "..";
+import { InnerShapeProps, JoinStyle } from "..";
 
 import { createRectShader } from "./rect-shader";
 import { createMiterShader } from "./miter-shader";
@@ -53,7 +53,7 @@ function createBaseOptions(regl: Regl): ShaderDrawConfig<undefined> {
     offset: 0,
 
     uniforms: {
-      miterMode: (_, prop) => (prop.join === JoinType.Round ? 2 : 1),
+      miterMode: (_, prop) => (prop.join === JoinStyle.Round ? 2 : 1),
       miterLimit: (_, p) => p.miterLimit,
       scale: (_, p) => p.scale,
       scaleFract: (_, p) => p.scaleFract,

@@ -8,25 +8,49 @@ import { createShaders } from "./shaders";
 import { updateDashTextureAndGetLength } from "./update-dash-texture";
 import { updateColorBuffer } from "./update-color-buffer";
 
-export enum JoinType {
-  Miter = "miter",
+export enum JoinStyle {
+  Bevel = "bevel",
   Round = "round",
   Rect = "rect",
 }
 
 export type ShapeProps = {
-  dashes: number[] | null;
-  join: JoinType;
-  miterLimit: number;
-  thickness: number;
-  color: Color | Color[];
-  opacity: number;
-  overlay: boolean;
-  viewport: BoundingBox;
-  close: boolean;
+  /** Number of points to in the shape. */
   count: number;
-  depth: number;
+
+  /** Stroke color of the shape. Can either be a single color or an array of colors containing a color for every point in the shape. The format of a single color is either a CSS color string or an array with `0..1` values, eg. `"red"` or `[0, 0, 0, 1]`. */
+  color: Color | Color[];
+
+  /** Transparency of the shape's stroke (`0..1`). */
+  opacity: number;
+
+  /** Thickness of the shape's stroke in px (`>0`). */
+  thickness: number;
+
+  /** Array with dash lengths in px, altering color/space pairs, ie. `[2,10, 5,10, ...]`. `null` corresponds to solid line. */
+  dashes: number[] | null;
+
+  /** Join style: `"rect"`, `"round"`, `"bevel"`. Applied to caps too. */
+  join: JoinStyle;
+
+  /** Max ratio of the join length to the thickness. */
+  miterLimit: number;
+
+  /** Connect last point with the first point with a stroke. */
+  close: boolean;
+
+  /** Enable overlay of line segments. */
+  overlay: boolean;
+
+  /** Visible data range. */
   range: Bounds;
+
+  /** Area within canvas. */
+  viewport: BoundingBox;
+
+  /** Value for the z-axis of the shapes position. */
+  depth: number;
+
   // fill: any;
 };
 
@@ -49,9 +73,9 @@ export interface InnerShapeProps extends ShapeProps {
 function createDefaultProps(regl: Regl): ShapeProps {
   return {
     dashes: null,
-    join: JoinType.Miter,
+    join: JoinStyle.Bevel,
     miterLimit: 1,
-    thickness: 12,
+    thickness: 1,
     color: "white",
     opacity: 1,
     overlay: false,
@@ -261,7 +285,7 @@ export default function (regl: Regl) {
           dashTexture,
         };
 
-        if (join === JoinType.Rect) shaders.rect(renderProps);
+        if (join === JoinStyle.Rect) shaders.rect(renderProps);
         else shaders.miter(renderProps);
       };
     },

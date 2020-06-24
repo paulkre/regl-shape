@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Does not force the user anymore to provide the `count` attribute in the props. If `count` is not provided, the module automatically assumes that the whole point array should be used for the shape.
 - It is now possible to set the `dashes` property in order to render dashed shape strokes.
+- Documentation for input properties added.
 
 ## [1.0.1] - 2020-06-23
 

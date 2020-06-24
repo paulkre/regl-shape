@@ -12,6 +12,7 @@ const points = new Float64Array(2 * res).fill(0);
 
 const shape = createShape(points, {
   join: "round",
+  thickness: 12,
   color: Array(res)
     .fill()
     .map(() => [Math.random(), Math.random(), Math.random()]),
