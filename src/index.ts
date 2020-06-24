@@ -83,6 +83,7 @@ export default function (regl: Regl) {
     ) {
       const initialProps: ShapeProps = {
         ...defaultProps,
+        count: Math.floor(points.length / 2),
         ...partialInitialProps,
       };
 
