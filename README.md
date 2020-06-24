@@ -2,7 +2,7 @@
 
 2D shape shader for regl.
 
-A lot of the code in this package was converted from [regl-line](https://www.npmjs.com/package/regl-line) to fit modern development approaches. I recommend using [webpack](https://www.npmjs.com/package/webpack) with [glslify-loader](https://www.npmjs.com/package/glslify-loader) to import this package.
+A lot of the code in this package was converted from [regl-line2d](https://www.npmjs.com/package/regl-line2d) to fit modern development approaches. I recommend using [webpack](https://www.npmjs.com/package/webpack) with [glslify-loader](https://www.npmjs.com/package/glslify-loader) to import this package.
 
 ## Usage
 
@@ -31,6 +31,10 @@ regl.frame(() => {
 ```
 
 If the number of the shape's points is supposed to change after creation you can do this by setting the `count` prop inside the draw call. Keep in mind that you can only provide values which are lower than the halved length of the initially created point array.
+
+### Properties
+
+- 
 
 ## Example
 
