@@ -40,7 +40,7 @@ The shape's properties can either be passed on creation or when the shape is bei
 | --- | ------ | --- |
 | `count` | Number of points to in the shape. | `0` |
 | `color` | Stroke color of the shape. Can either be a single color or an array of colors containing a color for every point in the shape. The format of a single color is either a CSS color string or an array with `0..1` values, eg. `"red"` or `[0, 0, 0, 1]`. | `"white"` |
-| `fill` | Fill area enclosed by line with defined color. | `null` |
+| `fill` | Fill area enclosed by points with defined color. If `fill` is `null` the enclosed area will be transparent. | `null` |
 | `opacity` | Transparency of the shape's stroke (`0..1`). | `1` |
 | `thickness` | Thickness of the shape's stroke in px (`>0`). | `1` |
 | `dashes` | Array with dash lengths in px, altering color/space pairs, ie. `[2,10, 5,10, ...]`. `null` corresponds to solid line. | `null` |

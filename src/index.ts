@@ -3,11 +3,11 @@ import { InputColor } from "color-normalize";
 import getBounds, { Bounds } from "array-bounds";
 import normalize from "array-normalize";
 import rgba from "color-normalize";
+import triangulate from "earcut";
 
 import { createShaders } from "./shaders";
 import { updateDashTextureAndGetLength } from "./update-dash-texture";
 import { updateColorBuffer } from "./update-color-buffer";
-import { triangulate } from "./triangulate";
 
 export enum JoinStyle {
   Bevel = "bevel",
