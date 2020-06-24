@@ -32,6 +32,7 @@
   "devDependencies": {
     "@babel/core": "^7.10.3",
     "@babel/preset-env": "^7.10.3",
+    "@types/earcut": "^2.1.1",
     "babel-loader": "^8.1.0",
     "copyfiles": "^2.3.0",
     "glslify-loader": "^2.0.0",
@@ -49,6 +50,7 @@
   "dependencies": {
     "array-bounds": "^1.0.1",
     "array-normalize": "^1.1.4",
-    "color-normalize": "^1.5.0"
+    "color-normalize": "^1.5.0",
+    "earcut": "^2.2.2"
   }
 }

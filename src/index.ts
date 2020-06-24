@@ -1,12 +1,13 @@
 import { Regl, Buffer, Texture2D, BoundingBox } from "regl";
-import { InputColor as Color } from "color-normalize";
+import { InputColor } from "color-normalize";
 import getBounds, { Bounds } from "array-bounds";
 import normalize from "array-normalize";
-// import triangulate from "earcut";
+import rgba from "color-normalize";
 
 import { createShaders } from "./shaders";
 import { updateDashTextureAndGetLength } from "./update-dash-texture";
 import { updateColorBuffer } from "./update-color-buffer";
+import { triangulate } from "./triangulate";
 
 export enum JoinStyle {
   Bevel = "bevel",
@@ -19,7 +20,10 @@ export type ShapeProps = {
   count: number;
 
   /** Stroke color of the shape. Can either be a single color or an array of colors containing a color for every point in the shape. The format of a single color is either a CSS color string or an array with `0..1` values, eg. `"red"` or `[0, 0, 0, 1]`. */
-  color: Color | Color[];
+  color: InputColor | InputColor[];
+
+  /** Fill area enclosed by line with defined color. */
+  fill: InputColor | null;
 
   /** Transparency of the shape's stroke (`0..1`). */
   opacity: number;
@@ -50,8 +54,6 @@ export type ShapeProps = {
 
   /** Value for the z-axis of the shapes position. */
   depth: number;
-
-  // fill: any;
 };
 
 export interface InnerShapeProps extends ShapeProps {
@@ -68,28 +70,31 @@ export interface InnerShapeProps extends ShapeProps {
 
   positionBuffer: Buffer;
   positionFractBuffer: Buffer;
+
+  triangles: number[] | null;
+  fillColor: Uint8Array | null;
 }
 
 function createDefaultProps(regl: Regl): ShapeProps {
   return {
+    count: 0,
+    color: "white",
+    fill: null,
+    thickness: 1,
     dashes: null,
     join: JoinStyle.Bevel,
     miterLimit: 1,
-    thickness: 1,
-    color: "white",
+    close: false,
     opacity: 1,
     overlay: false,
+    range: [-1, -1, 1, 1],
     viewport: {
       x: 0,
       y: 0,
       width: regl._gl.drawingBufferWidth,
       height: regl._gl.drawingBufferHeight,
     },
-    close: false,
-    count: 0,
     depth: 0,
-    range: [-1, -1, 1, 1],
-    // fill: null,
   };
 }
 
@@ -149,38 +154,7 @@ export default function (regl: Regl) {
       return (partialProps?: Partial<ShapeProps>) => {
         const props: ShapeProps = { ...initialProps, ...partialProps };
 
-        let { count, color, close, join, range, dashes } = props;
-
-        // create fill points
-        // if (state.fill) {
-        //   const pos = [];
-
-        //   // filter bad vertices and remap triangles to ensure shape
-        //   const ids = {};
-        //   const lastId = 0;
-
-        //   for (let i = 0, ptr = 0, l = state.count; i < l; i++) {
-        //     let x = points[i * 2];
-        //     let y = points[i * 2 + 1];
-        //     if (isNaN(x) || isNaN(y) || x == null || y == null) {
-        //       x = points[lastId * 2];
-        //       y = points[lastId * 2 + 1];
-        //       ids[i] = lastId;
-        //     } else {
-        //       lastId = i;
-        //     }
-        //     pos[ptr++] = x;
-        //     pos[ptr++] = y;
-        //   }
-
-        //   let triangles = triangulate(pos, []);
-
-        //   for (let i = 0, l = triangles.length; i < l; i++) {
-        //     if (ids[triangles[i]] != null) triangles[i] = ids[triangles[i]];
-        //   }
-
-        //   state.triangles = triangles;
-        // }
+        let { count, color, close, join, range, dashes, fill } = props;
 
         // update position buffers
         const flatCount = 2 * count;
@@ -267,7 +241,7 @@ export default function (regl: Regl) {
 
         if (color) updateColorBuffer(colorBuffer, colorData, color, count);
 
-        const renderProps = {
+        const renderProps: InnerShapeProps = {
           ...props,
 
           translate,
@@ -283,7 +257,14 @@ export default function (regl: Regl) {
 
           dashLength,
           dashTexture,
+
+          triangles: fill ? triangulate(points) : null,
+          fillColor: fill ? rgba(fill, "uint8") : null,
         };
+
+        regl._refresh();
+
+        if (fill) shaders.fill(renderProps);
 
         if (join === JoinStyle.Rect) shaders.rect(renderProps);
         else shaders.miter(renderProps);

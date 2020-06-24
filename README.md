@@ -1,6 +1,6 @@
 # regl-shape
 
-2D shape shader for regl.
+2D shape shader for [regl](https://www.npmjs.com/package/regl).
 
 A lot of the code in this package was converted from [regl-line2d](https://www.npmjs.com/package/regl-line2d) to fit modern development approaches. I recommend using [webpack](https://www.npmjs.com/package/webpack) with [glslify-loader](https://www.npmjs.com/package/glslify-loader) to import this package.
 
@@ -12,7 +12,7 @@ This package is focused on minimizing memory consumption to prevent unnecessary 
 import createRegl from "regl";
 import createShapeBuilder from "regl-shape";
 
-const regl = createRegl();
+const regl = createRegl({ extensions: ["ANGLE_instanced_arrays"] });
 const { createShape } = createShapeBuilder(regl);
 
 const points = new Float64Array(64);
@@ -40,6 +40,7 @@ The shape's properties can either be passed on creation or when the shape is bei
 | --- | ------ | --- |
 | `count` | Number of points to in the shape. | `0` |
 | `color` | Stroke color of the shape. Can either be a single color or an array of colors containing a color for every point in the shape. The format of a single color is either a CSS color string or an array with `0..1` values, eg. `"red"` or `[0, 0, 0, 1]`. | `"white"` |
+| `fill` | Fill area enclosed by line with defined color. | `null` |
 | `opacity` | Transparency of the shape's stroke (`0..1`). | `1` |
 | `thickness` | Thickness of the shape's stroke in px (`>0`). | `1` |
 | `dashes` | Array with dash lengths in px, altering color/space pairs, ie. `[2,10, 5,10, ...]`. `null` corresponds to solid line. | `null` |
@@ -60,10 +61,7 @@ The shape's properties can either be passed on creation or when the shape is bei
 import createRegl from "regl";
 import createShapeBuilder from "regl-shape";
 
-export const regl = createRegl({
-  extensions: ["ANGLE_instanced_arrays"],
-});
-
+const regl = createRegl({ extensions: ["ANGLE_instanced_arrays"] });
 const { createShape } = createShapeBuilder(regl);
 
 const res = 32;

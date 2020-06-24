@@ -21,9 +21,7 @@ declare module "color-normalize" {
     | Uint8Array
     | number[]
     | number;
-  type ColorDType = "uint8" | "uint8_clamped" | "array" | "float32" | "float64";
-  type OutputColor = Uint8Array | Float64Array | Uint8ClampedArray | number[];
-  const rgba: (color: InputColor, type: ColorDType) => OutputColor;
+  const rgba: (color: InputColor, type: "uint8") => Uint8Array;
   export default rgba;
 }
 

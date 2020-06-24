@@ -11,15 +11,16 @@ import { InnerShapeProps, JoinStyle } from "..";
 
 import { createRectShader } from "./rect-shader";
 import { createMiterShader } from "./miter-shader";
+import { createFillShader } from "./fill-shader";
 
 export type BufferAttribute = {
   buffer: Buffer | DynamicVariableFn<Buffer, DefaultContext, InnerShapeProps>;
-  offset: number;
-  stride: number;
-  divisor: number;
+  offset?: number;
+  stride?: number;
+  divisor?: number;
 };
 
-type ShaderUniforms = {
+export type ShaderUniforms = {
   miterMode: number;
   miterLimit: number;
 
@@ -39,11 +40,10 @@ type ShaderUniforms = {
   depth: number;
 };
 
-export type ShaderDrawConfig<Attributes> = DrawConfig<
-  ShaderUniforms,
+export type ShaderDrawConfig<
   Attributes,
-  InnerShapeProps
->;
+  Uniforms = ShaderUniforms
+> = DrawConfig<Uniforms, Attributes, InnerShapeProps>;
 
 function createBaseOptions(regl: Regl): ShaderDrawConfig<undefined> {
   return {
@@ -118,5 +118,7 @@ export function createShaders(regl: Regl) {
     console.log("No support for miter lines.");
   }
 
-  return { rect, miter };
+  const fill = createFillShader(regl, baseOptions);
+
+  return { rect, miter, fill };
 }
