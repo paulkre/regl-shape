@@ -12,27 +12,32 @@ varying vec4 fragColor;
 varying vec2 tangent;
 
 vec2 project(vec2 position, vec2 positionFract, vec2 scale, vec2 scaleFract, vec2 translate, vec2 translateFract) {
-	// the order is important
-	return position * scale + translate
-       + positionFract * scale + translateFract
-       + position * scaleFract
-       + positionFract * scaleFract;
+  // the order is important
+  return position * scale + translate
+    + positionFract * scale + translateFract
+    + position * scaleFract
+    + positionFract * scaleFract;
+}
+
+vec2 getPointPosition() {
+  if (lineEnd == 1.) {
+    return project(bCoord, bCoordFract, scale, scaleFract, translate, translateFract);
+  } else {
+    return project(aCoord, aCoordFract, scale, scaleFract, translate, translateFract);
+  }
 }
 
 void main() {
-	float lineStart = 1. - lineEnd;
-	float lineOffset = lineTop * 2. - 1.;
+  vec2 diff = (bCoord + bCoordFract - aCoord - aCoordFract);
+  tangent = normalize(diff * scale * viewport.zw);
+  vec2 normal = vec2(-tangent.y, tangent.x);
+  vec2 lineOffset = thickness * (lineTop - .5) * normal;
 
-	vec2 diff = (bCoord + bCoordFract - aCoord - aCoordFract);
-	tangent = normalize(diff * scale * viewport.zw);
-	vec2 normal = vec2(-tangent.y, tangent.x);
+  lineOffset /= viewport.zw;
 
-	vec2 position = project(aCoord, aCoordFract, scale, scaleFract, translate, translateFract) * lineStart
-		+ project(bCoord, bCoordFract, scale, scaleFract, translate, translateFract) * lineEnd
+  vec2 position = getPointPosition() + lineOffset;
 
-		+ thickness * normal * .5 * lineOffset / viewport.zw;
+  gl_Position = vec4(position * 2.0 - 1.0, depth, 1);
 
-	gl_Position = vec4(position * 2.0 - 1.0, depth, 1);
-
-	fragColor = color / 255.;
+  fragColor = color / 255.;
 }
