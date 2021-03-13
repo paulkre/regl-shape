@@ -25,8 +25,7 @@ const shapes = pointCounts.map((pointCount, i) => {
 
   return createShape(points, {
     join: "round",
-    thickness: 8,
-    fill: [1, 0, 0, 0.5],
+    thickness: 32,
     close: true,
     color: strokeColor,
     fill: fillColor,
